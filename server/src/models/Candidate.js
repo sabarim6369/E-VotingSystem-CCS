@@ -7,6 +7,11 @@ const candidateSchema = new mongoose.Schema(
       required: true,
       trim: true
     },
+    party: {
+      type: String,
+      required: true,
+      trim: true
+    },
     electionId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Election',

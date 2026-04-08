@@ -126,10 +126,10 @@ export const createElection = async (req, res, next) => {
 export const addCandidate = async (req, res, next) => {
   try {
     const { electionId } = req.params;
-    const { name } = req.body;
+    const { name, party } = req.body;
 
-    if (!name) {
-      return res.status(400).json({ message: 'Candidate name is required' });
+    if (!name || !party) {
+      return res.status(400).json({ message: 'Candidate name and party are required' });
     }
 
     const election = await Election.findById(electionId);
@@ -137,7 +137,7 @@ export const addCandidate = async (req, res, next) => {
       return res.status(404).json({ message: 'Election not found' });
     }
 
-    const candidate = await Candidate.create({ name, electionId });
+    const candidate = await Candidate.create({ name, party, electionId });
     return res.status(201).json(candidate);
   } catch (error) {
     if (error.code === 11000) {
